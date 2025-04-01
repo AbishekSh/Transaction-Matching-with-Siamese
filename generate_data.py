@@ -3,19 +3,18 @@ import numpy as np
 import random
 from datetime import timedelta, datetime
 
-# Function to generate realistic financial transaction descriptions
-def generate_description():
+def gen_desc():
     transaction_types = ['Payment', 'Transfer', 'Invoice', 'Withdrawal', 'Deposit', 'Refund', 'ACH Transfer']
     vendors = ['Amazon', 'Walmart', 'Netflix', 'Starbucks', 'Uber', 'Apple', 'Google', 'Costco', 'Shell', 'BestBuy']
     return f"{random.choice(transaction_types)} {random.choice(vendors)} #{random.randint(1000,9999)}"
 
 # Generate realistic ledger and bank transactions
-def generate_realistic_transactions(n=1000):
+def gen_data(n=1000):
     data_ledger, data_bank = [], []
     base_date = datetime(2024, 1, 1)
 
     for _ in range(n):
-        desc = generate_description()
+        desc = gen_desc()
         amount = round(random.uniform(5, 2000), 2)
         date = base_date + timedelta(days=random.randint(0, 90))
         
@@ -35,10 +34,8 @@ def generate_realistic_transactions(n=1000):
     bank_df = pd.DataFrame(data_bank, columns=['Description', 'Amount', 'Date'])
     return ledger_df, bank_df
 
-# Generate the data
-ledger_transactions, bank_transactions = generate_realistic_transactions(1000)
+ledger_transactions, bank_transactions = gen_data(1000)
 
-# Save to CSV files
 ledger_transactions_path = 'ledger_transactions.csv'
 bank_transactions_path = 'bank_transactions.csv'
 ledger_transactions.to_csv(ledger_transactions_path, index=False)
