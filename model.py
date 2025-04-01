@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class TransactionEmbeddingNet(nn.Module):
+class TANet(nn.Module):
     def __init__(self):
-        super(TransactionEmbeddingNet, self).__init__()
+        super(TANet, self).__init__()
         self.embedding = nn.EmbeddingBag(1000, 64, sparse=False)
         self.fc = nn.Sequential(
             nn.Linear(64 + 2, 128),
@@ -18,10 +18,10 @@ class TransactionEmbeddingNet(nn.Module):
         combined = torch.cat((embedded, numeric_features), dim=1)
         return self.fc(combined)
 
-class SiameseNetwork(nn.Module):
+class SiaNet(nn.Module):
     def __init__(self):
-        super(SiameseNetwork, self).__init__()
-        self.embedding_net = TransactionEmbeddingNet()
+        super(SiaNet, self).__init__()
+        self.embedding_net = TANet()
 
     def forward(self, text1, num1, text2, num2):
         out1 = self.embedding_net(text1, num1)
