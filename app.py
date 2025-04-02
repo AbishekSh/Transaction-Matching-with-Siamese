@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 import torch
 from torch.nn.utils.rnn import pad_sequence
-from model import SiameseNetwork
+from model import SiaNet
 
 app = Flask(__name__)
 
 device = torch.device("cpu")
-model = SiameseNetwork()
+model = SiaNet()
 model.load_state_dict(torch.load('siamese_model.pth', map_location=device))
 model.eval()
 
